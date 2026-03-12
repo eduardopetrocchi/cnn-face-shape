@@ -113,7 +113,7 @@ stages:
           dropout: 0.5
         training:
           learning_rate: 0.0001
-          epochs: 3
+          epochs: 100
           patience: 7
           reduce_lr_factor: 0.5
           reduce_lr_patience: 0.3
@@ -121,8 +121,8 @@ stages:
     outs:
     - path: models/best_model.keras
       hash: md5
-      md5: 7585d5ebe0afd8e45cda3ce6f60f9fab
-      size: 96321078
+      md5: 9bbba6732ca114a86c15763ae98ad73d
+      size: 96321077
       isexec: true
   evaluate:
     cmd: python -m src.evaluation.evaluate
@@ -134,8 +134,8 @@ stages:
       nfiles: 1001
     - path: models/best_model.keras
       hash: md5
-      md5: 7585d5ebe0afd8e45cda3ce6f60f9fab
-      size: 96321078
+      md5: 9bbba6732ca114a86c15763ae98ad73d
+      size: 96321077
       isexec: true
     - path: src/evaluation/evaluate.py
       hash: md5
@@ -169,11 +169,11 @@ stages:
     outs:
     - path: metrics/confusion_matrix.png
       hash: md5
-      md5: 49fd71621dc3d7d50d3d07b62c620bf3
-      size: 36104
+      md5: fda86ea85fc248dc29ffe30755b008c1
+      size: 33299
       isexec: true
     - path: metrics/evaluation.json
       hash: md5
-      md5: d07562185d659ac8ed54c538f6b804e9
-      size: 963
+      md5: 019f1427a2fc1d5226a69422999b47e4
+      size: 964
       isexec: true

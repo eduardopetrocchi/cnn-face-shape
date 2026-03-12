@@ -31,7 +31,7 @@ model:
 
 training:
   learning_rate:      0.0001
-  epochs:             3
+  epochs:             100
   patience:           7
   reduce_lr_factor:   0.5
   reduce_lr_patience: 0.3
