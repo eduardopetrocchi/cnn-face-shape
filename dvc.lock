@@ -121,7 +121,7 @@ stages:
     outs:
     - path: models/best_model.keras
       hash: md5
-      md5: 12226e8c962fb7fd61c9c90ed2d79dd7
+      md5: 7585d5ebe0afd8e45cda3ce6f60f9fab
       size: 96321078
       isexec: true
   evaluate:
@@ -134,7 +134,7 @@ stages:
       nfiles: 1001
     - path: models/best_model.keras
       hash: md5
-      md5: 12226e8c962fb7fd61c9c90ed2d79dd7
+      md5: 7585d5ebe0afd8e45cda3ce6f60f9fab
       size: 96321078
       isexec: true
     - path: src/evaluation/evaluate.py
@@ -169,11 +169,11 @@ stages:
     outs:
     - path: metrics/confusion_matrix.png
       hash: md5
-      md5: d53d1af9091d7fdc30fb51eb63b26799
-      size: 34765
+      md5: 49fd71621dc3d7d50d3d07b62c620bf3
+      size: 36104
       isexec: true
     - path: metrics/evaluation.json
       hash: md5
-      md5: 2736d03b7cc1cbc9b72a22fc53604a46
+      md5: d07562185d659ac8ed54c538f6b804e9
       size: 963
       isexec: true
