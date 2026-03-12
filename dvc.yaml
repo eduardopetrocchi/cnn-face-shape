@@ -1,0 +1,49 @@
+stages:
+  prepare:
+    cmd: python -m src.preprocessing.prepare
+    deps:
+      - src/preprocessing/prepare.py
+      - data/training_set
+      - data/testing_set
+    params:
+      - params.yaml:
+          - data
+          - augmentation
+  
+  train:
+    cmd: python -m src.training.train
+    deps:
+        - src/training/train.py
+        - src/training/model_training.py
+        - src/preprocessing/prepare.py
+        - data/training_set
+        - data/testing_set
+    params:
+      - params.yaml:
+          - data
+          - augmentation
+          - model
+          - training
+          - mlflow
+    outs:
+      - models/best_model.keras
+  
+  evaluate:
+    cmd: python -m src.evaluation.evaluate
+    deps:
+      - src/evaluation/evaluate.py
+      - src/preprocessing/prepare.py
+      - models/best_model.keras
+      - data/testing_set
+    params:
+      - params.yaml:
+          - data
+          - mlflow
+    metrics:
+      - metrics/evaluation.json:
+          cache: false
+    plots:
+      - metrics/confusion_matrix.png:
+          cache: false
+
+

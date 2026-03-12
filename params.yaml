@@ -1,0 +1,52 @@
+data:
+  train_dir: "data/training_set"
+  test_dir: "data/testing_set"
+  image_size: [288, 288]
+  batch_size: 32
+  seed: 42
+  classes:
+    - Heart
+    - Oblong
+    - Oval
+    - Round
+    - Square
+
+augmentation:
+  rotation_range: 25
+  width_shift_range: 0.15
+  height_shift_range: 0.15
+  shear_range: 0.15
+  zoom_range: 0.2
+  horizontal_flip: True
+  brightness_range: [0.8, 1.2]
+  fill_mode: "nearest"
+  validation_split: 0.0
+
+model:
+  weights: "imagenet"
+  include_top: False
+  label_smoothing: 0.1
+  dense_units: 128
+  dropout: 0.5
+
+training:
+  learning_rate:      0.0001
+  epochs:             3
+  patience:           7
+  reduce_lr_factor:   0.5
+  reduce_lr_patience: 0.3
+  min_lr:             0.000001
+
+mlflow:
+  experiment_name: "cnn-face-shape"
+  run_name:        "efficientnetb2"
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  glasses_map:
+    Heart:   ["Aviador", "Redondo", "Oval", "Leve/sem aro"]
+    Oblong:  ["Redondo", "Quadrado grande", "Wayfarer", "Aviador largo"]
+    Oval:    ["Qualquer estilo", "Aviador", "Wayfarer", "Redondo"]
+    Round:   ["Quadrado", "Retangular", "Wayfarer", "Angular"]
+    Square:  ["Redondo", "Oval", "Aviador", "Cat-eye"]

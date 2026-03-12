@@ -1,0 +1,32 @@
+# Credenciais
+.env
+
+# Dados e modelos (versionaods pelo DVC)
+/data/training_set/
+/data/testing_set/
+/models
+*.keras
+*.pkl
+
+# Métricas e artefatos gerados
+/metrics
+
+# MLFlow
+mlruns/
+
+# DVC
+/tmp
+
+# Python
+__pycache__/
+*.egg-info/
+
+# Ambientes virtuais
+.venv
+venv
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
