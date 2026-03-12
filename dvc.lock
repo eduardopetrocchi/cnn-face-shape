@@ -1,0 +1,179 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python -m src.preprocessing.prepare
+    deps:
+    - path: data/testing_set
+      hash: md5
+      md5: 93aff02f679e41f43358a8e57d1d6dae.dir
+      size: 164947912
+      nfiles: 1001
+    - path: data/training_set
+      hash: md5
+      md5: 0c64913160c1db853bbad4fa25240f9a.dir
+      size: 562737153
+      nfiles: 4000
+    - path: src/preprocessing/prepare.py
+      hash: md5
+      md5: 71981d9f091e7c06224031fb12dc2608
+      size: 4795
+      isexec: true
+    params:
+      params.yaml:
+        augmentation:
+          rotation_range: 25
+          width_shift_range: 0.15
+          height_shift_range: 0.15
+          shear_range: 0.15
+          zoom_range: 0.2
+          horizontal_flip: true
+          brightness_range:
+          - 0.8
+          - 1.2
+          fill_mode: nearest
+          validation_split: 0.0
+        data:
+          train_dir: data/training_set
+          test_dir: data/testing_set
+          image_size:
+          - 288
+          - 288
+          batch_size: 32
+          seed: 42
+          classes:
+          - Heart
+          - Oblong
+          - Oval
+          - Round
+          - Square
+  train:
+    cmd: python -m src.training.train
+    deps:
+    - path: data/testing_set
+      hash: md5
+      md5: 93aff02f679e41f43358a8e57d1d6dae.dir
+      size: 164947912
+      nfiles: 1001
+    - path: data/training_set
+      hash: md5
+      md5: 0c64913160c1db853bbad4fa25240f9a.dir
+      size: 562737153
+      nfiles: 4000
+    - path: src/preprocessing/prepare.py
+      hash: md5
+      md5: 71981d9f091e7c06224031fb12dc2608
+      size: 4795
+      isexec: true
+    - path: src/training/model_training.py
+      hash: md5
+      md5: 3d7d29a1f57cc7dd8a197b188e12ec4c
+      size: 3683
+      isexec: true
+    - path: src/training/train.py
+      hash: md5
+      md5: fddb72809080672235b90faeb3947534
+      size: 7501
+      isexec: true
+    params:
+      params.yaml:
+        augmentation:
+          rotation_range: 25
+          width_shift_range: 0.15
+          height_shift_range: 0.15
+          shear_range: 0.15
+          zoom_range: 0.2
+          horizontal_flip: true
+          brightness_range:
+          - 0.8
+          - 1.2
+          fill_mode: nearest
+          validation_split: 0.0
+        data:
+          train_dir: data/training_set
+          test_dir: data/testing_set
+          image_size:
+          - 288
+          - 288
+          batch_size: 32
+          seed: 42
+          classes:
+          - Heart
+          - Oblong
+          - Oval
+          - Round
+          - Square
+        mlflow:
+          experiment_name: cnn-face-shape
+          run_name: efficientnetb2
+        model:
+          weights: imagenet
+          include_top: false
+          label_smoothing: 0.1
+          dense_units: 128
+          dropout: 0.5
+        training:
+          learning_rate: 0.0001
+          epochs: 3
+          patience: 7
+          reduce_lr_factor: 0.5
+          reduce_lr_patience: 0.3
+          min_lr: 1e-06
+    outs:
+    - path: models/best_model.keras
+      hash: md5
+      md5: 12226e8c962fb7fd61c9c90ed2d79dd7
+      size: 96321078
+      isexec: true
+  evaluate:
+    cmd: python -m src.evaluation.evaluate
+    deps:
+    - path: data/testing_set
+      hash: md5
+      md5: 93aff02f679e41f43358a8e57d1d6dae.dir
+      size: 164947912
+      nfiles: 1001
+    - path: models/best_model.keras
+      hash: md5
+      md5: 12226e8c962fb7fd61c9c90ed2d79dd7
+      size: 96321078
+      isexec: true
+    - path: src/evaluation/evaluate.py
+      hash: md5
+      md5: d67c83bfd3fc25f4bbd5c50a0e7a2270
+      size: 5865
+      isexec: true
+    - path: src/preprocessing/prepare.py
+      hash: md5
+      md5: 71981d9f091e7c06224031fb12dc2608
+      size: 4795
+      isexec: true
+    params:
+      params.yaml:
+        data:
+          train_dir: data/training_set
+          test_dir: data/testing_set
+          image_size:
+          - 288
+          - 288
+          batch_size: 32
+          seed: 42
+          classes:
+          - Heart
+          - Oblong
+          - Oval
+          - Round
+          - Square
+        mlflow:
+          experiment_name: cnn-face-shape
+          run_name: efficientnetb2
+    outs:
+    - path: metrics/confusion_matrix.png
+      hash: md5
+      md5: d53d1af9091d7fdc30fb51eb63b26799
+      size: 34765
+      isexec: true
+    - path: metrics/evaluation.json
+      hash: md5
+      md5: 2736d03b7cc1cbc9b72a22fc53604a46
+      size: 963
+      isexec: true
